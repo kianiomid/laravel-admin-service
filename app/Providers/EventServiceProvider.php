@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Jobs\ProductLikedJob;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -14,11 +15,11 @@ class EventServiceProvider extends ServiceProvider
      *
      * @var array
      */
-    protected $listen = [
+    /*protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-    ];
+    ];*/
 
     /**
      * Register any events for your application.
@@ -27,6 +28,9 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        // product liked
+        \App::bindMethod(ProductLikedJob::class . '@handle', function ($job) {
+            return $job->handle();
+        });
     }
 }

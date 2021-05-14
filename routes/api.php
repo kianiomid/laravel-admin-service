@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\api\ProductController;
+use App\Http\Controllers\Admin\api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +19,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::apiResource('products', ProductController::class)->except('update');
+Route::post('products/{product}', [ProductController::class, 'update'])->name('products.update');
+
+Route::get('user', [UserCOntroller::class, 'random'])->name('user.random');
